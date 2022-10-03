@@ -46,7 +46,6 @@ public class RealBoard{
 
     }
 
-
     public void update(RealBoardDto boarddto){
         this.title = boarddto.getTitle();
         this.writer = boarddto.getWriter();

@@ -26,6 +26,12 @@ public class RealBoardService {
         return list.stream().map(RealBoardResponseDto::new).collect(Collectors.toList());
     }
 
+    @Transactional
+    public RealBoard viewcontent(Long id){
+        RealBoard realBoard = realBoardRepository.findById(id).orElseThrow();
+        return realBoard;
+    }
+
     // 게시글 생성
     @Transactional // SQL 쿼리가 일어나야 함을 스프링에게 알려줌
     public Long writecontent(RealBoardDto realBoardDto) {
