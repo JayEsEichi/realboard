@@ -1,21 +1,25 @@
 package sparta.project.realboard.Entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import sparta.project.realboard.Dto.RealBoardDto;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
+@Setter
 @Getter
 @NoArgsConstructor
 @Entity
-public class RealBoard {
+public class RealBoard{
 
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Id
+    @javax.persistence.Id
     private Long id;
 
-    @Column(nullable = false)
+    @Column(length = 500, nullable = false)
     private String title;
 
     @Column(nullable = false)
@@ -24,22 +28,32 @@ public class RealBoard {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(columnDefinition="TEXT",nullable = false)
     private String content;
 
+    @Column
+    private LocalDateTime createdDate = LocalDateTime.now();
 
-    RealBoard(String title, String writer, String password, String content){
+    @Column
+    public LocalDateTime modifiedDate;
+
+    @Builder
+    public RealBoard(String title, String writer, String password, String content){
         this.title = title;
         this.writer = writer;
         this.password = password;
         this.content = content;
+
     }
 
 
-    RealBoard(RealBoardDto boarddto){
+    public void update(RealBoardDto boarddto){
         this.title = boarddto.getTitle();
         this.writer = boarddto.getWriter();
         this.password = boarddto.getPassword();
         this.content = boarddto.getContent();
+        this.modifiedDate = LocalDateTime.now();
     }
+
+
 }
